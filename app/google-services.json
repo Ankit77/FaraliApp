@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "231565254328",
+    "project_id": "queens-farali"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231565254328:android:bcc4cad92edb81f4",
+        "android_client_info": {
+          "package_name": "queenskitchen.in.farali"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOyp-Gngy3Ftf7p1hqk_Rh2RzdKqd0O3Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
