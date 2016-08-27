@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "queenskitchen.in.farali"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -28,5 +28,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
     compile 'com.google.android.gms:play-services:8.3.0'
+    compile 'ayar.oktay.library:advancedtextview:0.4.5'
 }
 apply plugin: 'com.google.gms.google-services'

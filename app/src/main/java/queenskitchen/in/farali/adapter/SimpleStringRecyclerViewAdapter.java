@@ -29,6 +29,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
     private int mBackground;
     private List<RecipesModel> mValues;
     private String language;
+    private Context mcontext;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public String mBoundString;
@@ -55,6 +56,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
     }
 
     public SimpleStringRecyclerViewAdapter(Context context, List<RecipesModel> items, String language) {
+        mcontext = context;
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
         mValues = items;
@@ -80,10 +82,10 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, ReceipeDetailActivity.class);
-                intent.putExtra(ReceipeDetailActivity.EXTRA_NAME, mValues.get(position).getId());
-                context.startActivity(intent);
+                Intent intent = new Intent(mcontext, ReceipeDetailActivity.class);
+                intent.putExtra(ReceipeDetailActivity.RECIPE_NAME, mValues.get(position).getId());
+                intent.putExtra(ReceipeDetailActivity.LANGUAGE_TYPE, language);
+                mcontext.startActivity(intent);
             }
         });
 

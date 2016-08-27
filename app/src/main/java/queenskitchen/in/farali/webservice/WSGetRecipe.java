@@ -41,7 +41,7 @@ public class WSGetRecipe {
         ArrayList<RecipesModel> arrayList = new ArrayList<>();
         try {
             if (!TextUtils.isEmpty(response)) {
-                response = response.replaceAll("\\\\", "");
+                //response = response.replaceAll("\\\\", "");
                 JSONObject jsonObject = new JSONObject(response);
                 JSONArray jsonArray = jsonObject.optJSONArray("info");
                 if (jsonArray != null && jsonArray.length() > 0) {

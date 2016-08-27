@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -41,17 +42,20 @@ public class SplashActivity extends AppCompatActivity {
         faraliApp = (FaraliApp) getApplicationContext();
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-
         if (!faraliApp.getSharedPreferences().getBoolean("ISDEVICEREGISTER", false)) {
             registerToGCM();
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                /* Create an Intent that will start the Menu-Activity. */
+                if (WebService.isNetworkAvailable(SplashActivity.this)) {
+                    asyncLoadData = new AsyncLoadData();
+                    asyncLoadData.execute();
+                }
+            }
+        }, 3000);
 
-
-        if (WebService.isNetworkAvailable(SplashActivity.this)) {
-
-            asyncLoadData = new AsyncLoadData();
-            asyncLoadData.execute();
-        }
 
     }
 
@@ -86,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish();

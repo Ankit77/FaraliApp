@@ -39,7 +39,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/backdrop"
+                android:id="@+id/activity_recipe_detail_imgrecipeimage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -47,7 +47,7 @@
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/activity_recipe_detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
@@ -79,15 +79,40 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/activity_recipe_detail_tvcookingtime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Info"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:text="Cooking Time : 20-30 Minutes"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/activity_recipe_detail_tvserving"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/cheese_ipsum" />
+                        android:layout_marginTop="5dp"
+                        android:text="Serving : 10-12 Pieces"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/activity_recipe_detail_tvpreproration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Pre-properation : Not Needed"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/activity_recipe_detail_tvLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Level of Cooking : Easy"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
 
                 </LinearLayout>
 
@@ -108,13 +133,18 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Friends"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:text="Ingredients :"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@android:color/black" />
 
                     <TextView
+                        android:id="@+id/activity_recipe_detail_tvingredients"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/cheese_ipsum" />
+                        android:layout_marginTop="5dp"
+                        android:text="@string/cheese_ipsum"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -135,13 +165,18 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Related"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:text="Preparation Method :"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@android:color/black" />
 
                     <TextView
+                        android:id="@+id/activity_recipe_detail_tvpreparation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/cheese_ipsum" />
+                        android:layout_marginTop="5dp"
+                        android:text="@string/cheese_ipsum"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -152,6 +187,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_recipe_detail_fabfav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
@@ -161,7 +197,7 @@
         app:layout_anchorGravity="bottom|right|end" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/activity_recipe_detail_fabShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

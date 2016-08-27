@@ -146,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         Cursor cursor = null;
         try {
-            String query = "Select * from " + DBUtils.RECEIPE_TABLE + " where " + DBUtils.COLUMN_RECEIPE_LANGUAGE + " = '" + language+"'";
+            String query = "Select * from " + DBUtils.RECEIPE_TABLE + " where " + DBUtils.COLUMN_RECEIPE_LANGUAGE + " = '" + language + "'";
             cursor = database.rawQuery(query, null);
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -156,6 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     model.setId(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_ID)));
                     model.setTitle(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_TITLE)));
                     model.setImage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_IMAGE)));
+                    model.setServings(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_SERVING)));
                     model.setCookingtime(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_COOKINGTIME)));
                     model.setPreproperation(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_PREPARATION)));
                     model.setLevel(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LEVEL)));
@@ -195,6 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 recipesModel = new RecipesModel();
                 recipesModel.setId(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_ID)));
                 recipesModel.setTitle(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_TITLE)));
+                recipesModel.setServings(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_SERVING)));
                 recipesModel.setImage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_IMAGE)));
                 recipesModel.setCookingtime(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_COOKINGTIME)));
                 recipesModel.setPreproperation(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_PREPARATION)));

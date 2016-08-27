@@ -16,6 +16,9 @@
 
 package queenskitchen.in.farali.activities;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -36,6 +39,8 @@ import java.util.ArrayList;
 import queenskitchen.in.farali.R;
 import queenskitchen.in.farali.adapter.NavigationAdapter;
 import queenskitchen.in.farali.common.Const;
+import queenskitchen.in.farali.common.Utils;
+import queenskitchen.in.farali.fragment.AboutUsFragment;
 import queenskitchen.in.farali.fragment.ReceipeListFragment;
 
 /**
@@ -45,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
 
     private DrawerLayout mDrawerLayout;
     private RecyclerView rv;
-    private  Toolbar toolbar;
+    private Toolbar toolbar;
 
     public Toolbar getToolbar() {
         return toolbar;
@@ -57,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         setContentView(R.layout.activity_main);
         rv = (RecyclerView) findViewById(R.id.lst_menu_items);
         setupRecyclerView(rv);
-         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -106,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_share:
-                Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
+                Utils.shareApplication(MainActivity.this);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -134,9 +139,14 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
             callFragment(Const.LANG_GUJ);
         } else if (position == 2) {
         } else if (position == 3) {
+            Utils.shareApplication(MainActivity.this);
         } else if (position == 4) {
+            launchMarket();
         } else if (position == 5) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://queenskitchen.in"));
+            startActivity(browserIntent);
         } else if (position == 6) {
+            callAboutFragment();
         }
         mDrawerLayout.closeDrawers();
     }
@@ -150,5 +160,23 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         receipeListFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.viewpager, receipeListFragment, ReceipeListFragment.class.getSimpleName());
         fragmentTransaction.commit();
+    }
+
+    private void callAboutFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        AboutUsFragment aboutUsFragment = new AboutUsFragment();
+        fragmentTransaction.replace(R.id.viewpager, aboutUsFragment, AboutUsFragment.class.getSimpleName());
+        fragmentTransaction.commit();
+    }
+
+    private void launchMarket() {
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(myAppLinkToMarket);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
+        }
     }
 }

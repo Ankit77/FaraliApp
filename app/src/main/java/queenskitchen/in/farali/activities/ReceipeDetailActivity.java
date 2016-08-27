@@ -16,6 +16,7 @@
 
 package queenskitchen.in.farali.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -23,64 +24,135 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import queenskitchen.in.farali.FaraliApp;
 import queenskitchen.in.farali.R;
+import queenskitchen.in.farali.common.Utils;
 import queenskitchen.in.farali.model.RecipesModel;
 
 
-public class ReceipeDetailActivity extends AppCompatActivity {
+public class ReceipeDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String EXTRA_NAME = "cheese_name";
+    public static final String RECIPE_NAME = "recipe_name";
+    public static final String LANGUAGE_TYPE = "lan_type";
     private String recipeId;
     private RecipesModel recipesModel;
     private FaraliApp faraliApp;
+    private TextView tvCookingTime;
+    private TextView tvServing;
+    private TextView tvPreparation;
+    private TextView tvLevel;
+    private TextView tvIngredients;
+    private TextView tvMethod;
+    private FloatingActionButton fabFav;
+    private FloatingActionButton fabShare;
+    private ImageView imgRecipe;
+    private String language;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_recipe_detail);
         faraliApp = (FaraliApp) getApplicationContext();
-        Intent intent = getIntent();
-        recipeId = intent.getStringExtra(EXTRA_NAME);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        if (!TextUtils.isEmpty(recipeId)) {
-            recipesModel = faraliApp.getDatabaseHelper().getRecipeDetail(recipeId);
-            if (recipesModel != null) {
-                collapsingToolbar.setTitle(recipesModel.getTitle());
-            }
+        init();
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            recipeId = intent.getStringExtra(RECIPE_NAME);
+            language = intent.getStringExtra(LANGUAGE_TYPE);
+            final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            CollapsingToolbarLayout collapsingToolbar =
+                    (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+            if (!TextUtils.isEmpty(recipeId)) {
+                recipesModel = faraliApp.getDatabaseHelper().getRecipeDetail(recipeId);
+                if (recipesModel != null) {
+                    collapsingToolbar.setTitle(recipesModel.getTitle());
+                    loadBackdrop(recipesModel);
+                }
 
+            }
         }
-
-
-        loadBackdrop();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
-    private void loadBackdrop() {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-//        Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+    private void init() {
+        tvCookingTime = (TextView) findViewById(R.id.activity_recipe_detail_tvcookingtime);
+        tvServing = (TextView) findViewById(R.id.activity_recipe_detail_tvserving);
+        tvLevel = (TextView) findViewById(R.id.activity_recipe_detail_tvLevel);
+        tvPreparation = (TextView) findViewById(R.id.activity_recipe_detail_tvpreproration);
+        tvIngredients = (TextView) findViewById(R.id.activity_recipe_detail_tvingredients);
+        tvMethod = (TextView) findViewById(R.id.activity_recipe_detail_tvpreparation);
+        fabFav = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fabfav);
+        fabShare = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fabShare);
+        imgRecipe = (ImageView) findViewById(R.id.activity_recipe_detail_imgrecipeimage);
+        fabFav.setOnClickListener(this);
+        fabShare.setOnClickListener(this);
+    }
+
+    private void loadBackdrop(RecipesModel recipesModel) {
+        Glide.with(this).load(recipesModel.getImage()).centerCrop().into(imgRecipe);
+        tvCookingTime.setText("Cooking Time : " + recipesModel.getCookingtime());
+        tvServing.setText("Servings : " + recipesModel.getServings());
+        tvPreparation.setText("Pre-properation : " + recipesModel.getPreproperation());
+        tvLevel.setText("Level of Cooking : " + recipesModel.getLevel());
+        tvIngredients.setText(recipesModel.getIngredients());
+        tvMethod.setText(Html.fromHtml(recipesModel.getContent()));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sample_actions, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Only handle with DrawerToggle if the drawer indicator is enabled.
+
+        // Handle action buttons
+        switch (item.getItemId()) {
+            // Handle home button in non-drawer mode
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_share:
+                Utils.shareApplication(ReceipeDetailActivity.this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == fabFav) {
+
+        } else if (v == fabShare) {
+            shareRecipe();
+        }
+    }
+
+
+    public void shareRecipe() {
+        if (recipesModel != null) {
+            String message = "i want to share really amazing Farali Recipe with you : " + recipesModel.getLink();
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                    message);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        }
     }
 }
