@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import queenskitchen.in.farali.common.Const;
 import queenskitchen.in.farali.common.Utils;
 import queenskitchen.in.farali.model.RecipesModel;
 
@@ -79,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 RecipesModel recipesModel = recipelist.get(i);
                 values.put(DBUtils.COLUMN_RECEIPE_TITLE, recipesModel.getTitle());
                 values.put(DBUtils.COLUMN_RECEIPE_IMAGE, recipesModel.getImage());
+                values.put(DBUtils.COLUMN_RECEIPE_FAV, Const.UNFAV);
                 values.put(DBUtils.COLUMN_RECEIPE_COOKINGTIME, recipesModel.getCookingtime());
                 values.put(DBUtils.COLUMN_RECEIPE_PREPARATION, recipesModel.getPreproperation());
                 values.put(DBUtils.COLUMN_RECEIPE_LEVEL, recipesModel.getLevel());
@@ -165,6 +167,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     model.setDate(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_DATE)));
                     model.setLink(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LINK)));
                     model.setKeyword(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_KEYWORD)));
+                    model.setIsfav(cursor.getInt(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_FAV)));
+                    model.setLanguage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LANGUAGE)));
 
                     list.add(model);
                     cursor.moveToNext();
@@ -181,6 +185,166 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return list;
+    }
+
+
+    public ArrayList<RecipesModel> getFavRecipeList() {
+        final ArrayList<RecipesModel> list = new ArrayList<RecipesModel>();
+        if (!database.isOpen()) {
+            openDataBase();
+        }
+        Cursor cursor = null;
+        try {
+            String query = "Select * from " + DBUtils.RECEIPE_TABLE + " where " + DBUtils.COLUMN_RECEIPE_FAV + " = " + Const.FAV;
+            cursor = database.rawQuery(query, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                RecipesModel model = null;
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    model = new RecipesModel();
+                    model.setId(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_ID)));
+                    model.setTitle(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_TITLE)));
+                    model.setImage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_IMAGE)));
+                    model.setServings(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_SERVING)));
+                    model.setCookingtime(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_COOKINGTIME)));
+                    model.setPreproperation(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_PREPARATION)));
+                    model.setLevel(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LEVEL)));
+                    model.setIngredients(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_INGREDIENTS)));
+                    model.setContent(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_CONTENT)));
+                    model.setDate(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_DATE)));
+                    model.setLink(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LINK)));
+                    model.setKeyword(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_KEYWORD)));
+                    model.setIsfav(cursor.getInt(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_FAV)));
+                    model.setLanguage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LANGUAGE)));
+
+                    list.add(model);
+                    cursor.moveToNext();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            close();
+            if (cursor != null) {
+                cursor.close();
+                SQLiteDatabase.releaseMemory();
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<RecipesModel> getRecipeListUsingSearch(String language, String keyword) {
+        final ArrayList<RecipesModel> list = new ArrayList<RecipesModel>();
+        if (!database.isOpen()) {
+            openDataBase();
+        }
+        Cursor cursor = null;
+        try {
+            String query = "SELECT * FROM recipes where recipes_keyword  LIKE '%" + keyword + "%' and " + DBUtils.COLUMN_RECEIPE_LANGUAGE + " = '" + language + "'";
+            cursor = database.rawQuery(query, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                RecipesModel model = null;
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    model = new RecipesModel();
+                    model.setId(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_ID)));
+                    model.setTitle(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_TITLE)));
+                    model.setImage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_IMAGE)));
+                    model.setServings(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_SERVING)));
+                    model.setCookingtime(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_COOKINGTIME)));
+                    model.setPreproperation(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_PREPARATION)));
+                    model.setLevel(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LEVEL)));
+                    model.setIngredients(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_INGREDIENTS)));
+                    model.setContent(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_CONTENT)));
+                    model.setDate(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_DATE)));
+                    model.setLink(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LINK)));
+                    model.setKeyword(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_KEYWORD)));
+                    model.setIsfav(cursor.getInt(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_FAV)));
+                    model.setLanguage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LANGUAGE)));
+
+                    list.add(model);
+                    cursor.moveToNext();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            close();
+            if (cursor != null) {
+                cursor.close();
+                SQLiteDatabase.releaseMemory();
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<RecipesModel> getFavRecipeListUsingSearch(String keyword) {
+        final ArrayList<RecipesModel> list = new ArrayList<RecipesModel>();
+        if (!database.isOpen()) {
+            openDataBase();
+        }
+        Cursor cursor = null;
+        try {
+            String query = "SELECT * FROM recipes where recipes_keyword  LIKE '%" + keyword + "%' and " + DBUtils.COLUMN_RECEIPE_FAV + " = " + Const.FAV;
+            cursor = database.rawQuery(query, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                RecipesModel model = null;
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    model = new RecipesModel();
+                    model.setId(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_ID)));
+                    model.setTitle(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_TITLE)));
+                    model.setImage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_IMAGE)));
+                    model.setServings(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_SERVING)));
+                    model.setCookingtime(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_COOKINGTIME)));
+                    model.setPreproperation(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_PREPARATION)));
+                    model.setLevel(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LEVEL)));
+                    model.setIngredients(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_INGREDIENTS)));
+                    model.setContent(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_CONTENT)));
+                    model.setDate(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_DATE)));
+                    model.setLink(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LINK)));
+                    model.setKeyword(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_KEYWORD)));
+                    model.setIsfav(cursor.getInt(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_FAV)));
+                    model.setLanguage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LANGUAGE)));
+
+                    list.add(model);
+                    cursor.moveToNext();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            close();
+            if (cursor != null) {
+                cursor.close();
+                SQLiteDatabase.releaseMemory();
+            }
+        }
+        return list;
+    }
+
+    public long updateContact(String userid, int isfav) {
+        long i = 0;
+        if (!database.isOpen()) {
+            openDataBase();
+        }
+        try {
+            // database.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(DBUtils.COLUMN_RECEIPE_FAV, isfav);
+            i = database.update(DBUtils.RECEIPE_TABLE, values, DBUtils.COLUMN_RECEIPE_ID + "=?", new String[]{userid});
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            close();
+            SQLiteDatabase.releaseMemory();
+        }
+        return i;
     }
 
     public RecipesModel getRecipeDetail(String id) {
@@ -206,6 +370,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 recipesModel.setDate(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_DATE)));
                 recipesModel.setLink(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LINK)));
                 recipesModel.setKeyword(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_KEYWORD)));
+                recipesModel.setIsfav(cursor.getInt(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_FAV)));
+                recipesModel.setLanguage(cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_LANGUAGE)));
             }
         } catch (Exception e) {
             e.printStackTrace();

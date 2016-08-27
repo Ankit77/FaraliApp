@@ -16,7 +16,6 @@
 
 package queenskitchen.in.farali.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -36,6 +35,7 @@ import com.bumptech.glide.Glide;
 
 import queenskitchen.in.farali.FaraliApp;
 import queenskitchen.in.farali.R;
+import queenskitchen.in.farali.common.Const;
 import queenskitchen.in.farali.common.Utils;
 import queenskitchen.in.farali.model.RecipesModel;
 
@@ -137,6 +137,16 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if (v == fabFav) {
+            if (recipesModel.getIsfav() == Const.FAV) {
+                recipesModel.setIsfav(Const.UNFAV);
+                Snackbar.make(v, recipesModel.getTitle() + " is removed from your favouritelist !!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            } else {
+                recipesModel.setIsfav(Const.FAV);
+                Snackbar.make(v, recipesModel.getTitle() + " is added from your favouritelist !!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+            faraliApp.getDatabaseHelper().updateContact(recipeId, recipesModel.getIsfav());
 
         } else if (v == fabShare) {
             shareRecipe();

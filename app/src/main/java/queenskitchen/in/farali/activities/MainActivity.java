@@ -34,13 +34,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
 import java.util.ArrayList;
 
+import queenskitchen.in.farali.FaraliApp;
 import queenskitchen.in.farali.R;
 import queenskitchen.in.farali.adapter.NavigationAdapter;
 import queenskitchen.in.farali.common.Const;
 import queenskitchen.in.farali.common.Utils;
 import queenskitchen.in.farali.fragment.AboutUsFragment;
+import queenskitchen.in.farali.fragment.FavListFragment;
 import queenskitchen.in.farali.fragment.ReceipeListFragment;
 
 /**
@@ -51,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
     private DrawerLayout mDrawerLayout;
     private RecyclerView rv;
     private Toolbar toolbar;
+    private MaterialSearchView searchView;
+    private ActionBar ab;
+    private FaraliApp faraliApp;
 
     public Toolbar getToolbar() {
         return toolbar;
@@ -60,13 +67,14 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rv = (RecyclerView) findViewById(R.id.lst_menu_items);
-        setupRecyclerView(rv);
+        init();
+        callFragment(Const.LANG_ENG);
+    }
+
+    private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        final ActionBar ab = getSupportActionBar();
+        ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
@@ -76,8 +84,52 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
+        rv = (RecyclerView) findViewById(R.id.lst_menu_items);
+        setupRecyclerView(rv);
+        loadSearchView();
+    }
 
-        callFragment(Const.LANG_ENG);
+    private void loadSearchView() {
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setVoiceSearch(false);
+        searchView.setCursorDrawable(R.drawable.custom_cursor);
+        searchView.setEllipsize(true);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                ReceipeListFragment receipeListFragment = (ReceipeListFragment) getSupportFragmentManager().findFragmentByTag(ReceipeListFragment.class.getSimpleName());
+                if (receipeListFragment != null && receipeListFragment.isVisible()) {
+                    receipeListFragment.showSearchList(query);
+                } else {
+
+                    FavListFragment favListFragment = (FavListFragment) getSupportFragmentManager().findFragmentByTag(FavListFragment.class.getSimpleName());
+                    if (favListFragment != null && favListFragment.isVisible()) {
+                        favListFragment.showSearchList(query);
+                    }
+                }
+                Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
+            }
+        });
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -100,6 +152,9 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sample_actions, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
         return true;
     }
 
@@ -138,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         } else if (position == 1) {
             callFragment(Const.LANG_GUJ);
         } else if (position == 2) {
+            callFavListFragment();
         } else if (position == 3) {
             Utils.shareApplication(MainActivity.this);
         } else if (position == 4) {
@@ -157,8 +213,17 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         ReceipeListFragment receipeListFragment = new ReceipeListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("LANGUAGE", language);
+        bundle.putString("ISFAV", language);
         receipeListFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.viewpager, receipeListFragment, ReceipeListFragment.class.getSimpleName());
+        fragmentTransaction.commit();
+    }
+
+    private void callFavListFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FavListFragment favListFragment = new FavListFragment();
+        fragmentTransaction.replace(R.id.viewpager, favListFragment, FavListFragment.class.getSimpleName());
         fragmentTransaction.commit();
     }
 

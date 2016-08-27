@@ -9,4 +9,7 @@ public class Const {
     public static final String DATEFORMATE = "yyyy-MM-dd HH:mm:ss";
     public static final String LANG_GUJ = "g";
     public static final String LANG_ENG = "e";
+    public static final int FAV = 1;
+    public static final int UNFAV = 0;
+    ;
 }

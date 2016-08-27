@@ -17,6 +17,7 @@ public class RecipesModel {
     private String link;
     private String keyword;
     private String language;
+    private int isfav;
 
     public String getId() {
         return id;
@@ -120,5 +121,13 @@ public class RecipesModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getIsfav() {
+        return isfav;
+    }
+
+    public void setIsfav(int isfav) {
+        this.isfav = isfav;
     }
 }

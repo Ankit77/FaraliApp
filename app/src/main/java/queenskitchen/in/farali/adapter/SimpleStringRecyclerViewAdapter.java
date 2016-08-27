@@ -55,7 +55,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
         return mValues.get(position);
     }
 
-    public SimpleStringRecyclerViewAdapter(Context context, List<RecipesModel> items, String language) {
+    public SimpleStringRecyclerViewAdapter(Context context, List<RecipesModel> items) {
         mcontext = context;
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
@@ -74,7 +74,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mBoundString = mValues.get(position).getTitle();
-        if (language.equalsIgnoreCase(Const.LANG_ENG)) {
+        if (mValues.get(position).getLanguage().equalsIgnoreCase(Const.LANG_ENG)) {
             holder.mTextView.setText(Utils.decodeUnicode(mValues.get(position).getTitle()));
         } else {
             holder.mTextView.setText(mValues.get(position).getTitle());
@@ -84,7 +84,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
             public void onClick(View v) {
                 Intent intent = new Intent(mcontext, ReceipeDetailActivity.class);
                 intent.putExtra(ReceipeDetailActivity.RECIPE_NAME, mValues.get(position).getId());
-                intent.putExtra(ReceipeDetailActivity.LANGUAGE_TYPE, language);
+                intent.putExtra(ReceipeDetailActivity.LANGUAGE_TYPE, mValues.get(position).getLanguage());
                 mcontext.startActivity(intent);
             }
         });

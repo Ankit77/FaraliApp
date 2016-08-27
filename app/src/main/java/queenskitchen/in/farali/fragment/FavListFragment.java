@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2015 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package queenskitchen.in.farali.fragment;
 
 import android.os.Bundle;
@@ -31,12 +15,13 @@ import queenskitchen.in.farali.FaraliApp;
 import queenskitchen.in.farali.R;
 import queenskitchen.in.farali.activities.MainActivity;
 import queenskitchen.in.farali.adapter.SimpleStringRecyclerViewAdapter;
-import queenskitchen.in.farali.common.Const;
 import queenskitchen.in.farali.model.RecipesModel;
 
-public class ReceipeListFragment extends Fragment {
+/**
+ * Created by indianic on 27/08/16.
+ */
+public class FavListFragment extends Fragment {
 
-    private String type;
     private FaraliApp faraliApp;
     private RecyclerView rv;
     private SimpleStringRecyclerViewAdapter simpleStringRecyclerViewAdapter;
@@ -44,7 +29,6 @@ public class ReceipeListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        type = getArguments().getString("LANGUAGE", Const.LANG_ENG);
     }
 
     @Nullable
@@ -60,7 +44,7 @@ public class ReceipeListFragment extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        ArrayList<RecipesModel> recipelist = faraliApp.getDatabaseHelper().getRecipeList(type);
+        ArrayList<RecipesModel> recipelist = faraliApp.getDatabaseHelper().getFavRecipeList();
         if (recipelist != null && recipelist.size() > 0) {
             simpleStringRecyclerViewAdapter = new SimpleStringRecyclerViewAdapter(getActivity(), recipelist);
             recyclerView.setAdapter(simpleStringRecyclerViewAdapter);
@@ -68,7 +52,7 @@ public class ReceipeListFragment extends Fragment {
     }
 
     public void showSearchList(String keyword) {
-        ArrayList<RecipesModel> recipelist = faraliApp.getDatabaseHelper().getRecipeListUsingSearch(type, keyword);
+        ArrayList<RecipesModel> recipelist = faraliApp.getDatabaseHelper().getFavRecipeListUsingSearch(keyword);
         if (recipelist != null && recipelist.size() > 0) {
             simpleStringRecyclerViewAdapter = new SimpleStringRecyclerViewAdapter(getActivity(), recipelist);
             rv.setAdapter(simpleStringRecyclerViewAdapter);
