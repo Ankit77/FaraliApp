@@ -17,6 +17,8 @@
 package queenskitchen.in.farali.activities;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -243,5 +246,43 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    private void showAlertDialog(final Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(context.getString(R.string.app_name));
+        builder.setMessage(message);
+
+        String positiveText = context.getString(android.R.string.yes);
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                        dialog.dismiss();
+                        finish();
+
+                    }
+                });
+
+        String negativeText = context.getString(android.R.string.no);
+        builder.setNegativeButton(negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // negative button logic
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAlertDialog(MainActivity.this, "Do you really want to close App?");
     }
 }

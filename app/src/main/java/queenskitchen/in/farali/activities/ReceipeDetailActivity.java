@@ -112,7 +112,7 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sample_actions, menu);
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
         return true;
     }
 

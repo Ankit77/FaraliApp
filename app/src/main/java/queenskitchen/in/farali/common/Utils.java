@@ -1,12 +1,16 @@
 package queenskitchen.in.farali.common;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import queenskitchen.in.farali.R;
 
 /**
  * Created by indianic on 25/08/16.
@@ -50,6 +54,7 @@ public class Utils {
         return formatter.format(calendar.getTime());
 
     }
+
     public static String decodeUnicode(String theString) {
         char aChar;
         int len = theString.length();
@@ -116,8 +121,7 @@ public class Utils {
         return outBuffer.toString();
     }
 
-    public static void shareApplication(Context context)
-    {
+    public static void shareApplication(Context context) {
         String message = "You must try this Farali Recipe Application ones, Download Farali Recipes now from Playstore : https://play.google.com/store/apps/details?id=com.nazara.chachapuzzle&hl=en";
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
@@ -126,4 +130,7 @@ public class Utils {
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
     }
+
+
+
 }
