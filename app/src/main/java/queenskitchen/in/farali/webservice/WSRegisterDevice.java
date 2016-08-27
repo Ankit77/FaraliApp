@@ -29,7 +29,7 @@ public class WSRegisterDevice {
     }
 
     public boolean executeWebservice(String devicetoken) {
-        final String url = Const.BASE_URL + "db=fa&id=" + devicetoken;
+        final String url = Const.NOTIFICATION_URL + "db=fa&id=" + devicetoken;
         return parseJSONResponse(WebService.getMethod(url));
     }
 

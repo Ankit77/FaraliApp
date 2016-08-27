@@ -27,6 +27,8 @@ import com.google.android.gms.iid.InstanceID;
 
 import queenskitchen.in.farali.FaraliApp;
 import queenskitchen.in.farali.R;
+import queenskitchen.in.farali.webservice.WSRegisterDevice;
+
 //http://queenskitchen.in/app/farali_app.php?db=fa&id=fOAFo0lkybU:APA91bHWk6Dz4-h1Tt-IKbtkSRUu3vGQp9m4MaJC6H-bPJieW92K7b8Fikzo4hqQkJiprRwtCjj_aShLkG6w_b5ay31lrIesPRDFoAadZsnIcRcQl8NUMkqiKBqR2uSBkTtahMuVF6NL
 public class RegistrationIntentService extends IntentService {
 
@@ -82,8 +84,8 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
-//        WSRegisterDevice wsRegisterDevice = new WSRegisterDevice(RegistrationIntentService.this);
-//        wsRegisterDevice.executeWebservice(token);
+        WSRegisterDevice wsRegisterDevice = new WSRegisterDevice(RegistrationIntentService.this);
+        wsRegisterDevice.executeWebservice(token);
         faraliApp.getSharedPreferences().edit().putBoolean("ISDEVICEREGISTER", true).commit();
     }
 
