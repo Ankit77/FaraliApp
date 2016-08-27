@@ -52,6 +52,11 @@ public class SplashActivity extends AppCompatActivity {
                 if (WebService.isNetworkAvailable(SplashActivity.this)) {
                     asyncLoadData = new AsyncLoadData();
                     asyncLoadData.execute();
+                }else
+                {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         }, 3000);

@@ -7,6 +7,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
     private List<RecipesModel> mValues;
     private String language;
     private Context mcontext;
+    private int lastPosition = -1;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public String mBoundString;
@@ -73,6 +76,13 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        Animation animation = AnimationUtils.loadAnimation(mcontext,
+                (position > lastPosition) ? R.anim.up_from_bottom
+                        : R.anim.down_from_top);
+        holder.itemView.startAnimation(animation);
+        lastPosition = position;
+
+
         holder.mBoundString = mValues.get(position).getTitle();
         if (mValues.get(position).getLanguage().equalsIgnoreCase(Const.LANG_ENG)) {
             holder.mTextView.setText(Utils.decodeUnicode(mValues.get(position).getTitle()));
@@ -100,5 +110,6 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
     public int getItemCount() {
         return mValues.size();
     }
+
 
 }
