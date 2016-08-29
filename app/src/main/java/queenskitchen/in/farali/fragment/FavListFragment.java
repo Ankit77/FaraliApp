@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,8 @@ public class FavListFragment extends Fragment {
     private FaraliApp faraliApp;
     private RecyclerView rv;
     private SimpleStringRecyclerViewAdapter simpleStringRecyclerViewAdapter;
+    private TextView tvEmpty;
+    private View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,11 +38,12 @@ public class FavListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         faraliApp = (FaraliApp) getActivity().getApplicationContext();
-        ((MainActivity) getActivity()).getToolbar().setTitle("Farali Recipes");
-        rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_list, container, false);
+        ((MainActivity) getActivity()).getToolbar().setTitle("My Favorites");
+        view = inflater.inflate(R.layout.fragment_cheese_list, null);
+        rv = (RecyclerView) view.findViewById(R.id.recyclerview);
+        tvEmpty=(TextView)view.findViewById(R.id.tvempty);
         setupRecyclerView(rv);
-        return rv;
+        return view;
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -48,6 +52,12 @@ public class FavListFragment extends Fragment {
         if (recipelist != null && recipelist.size() > 0) {
             simpleStringRecyclerViewAdapter = new SimpleStringRecyclerViewAdapter(getActivity(), recipelist);
             recyclerView.setAdapter(simpleStringRecyclerViewAdapter);
+            tvEmpty.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            tvEmpty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            tvEmpty.setText("No item available");
         }
     }
 
@@ -56,6 +66,12 @@ public class FavListFragment extends Fragment {
         if (recipelist != null && recipelist.size() > 0) {
             simpleStringRecyclerViewAdapter = new SimpleStringRecyclerViewAdapter(getActivity(), recipelist);
             rv.setAdapter(simpleStringRecyclerViewAdapter);
+            tvEmpty.setVisibility(View.GONE);
+            rv.setVisibility(View.VISIBLE);
+        } else {
+            tvEmpty.setVisibility(View.VISIBLE);
+            rv.setVisibility(View.GONE);
+            tvEmpty.setText("No item available");
         }
     }
 }

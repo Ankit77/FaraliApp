@@ -35,9 +35,8 @@
 
             <ImageView
                 android:id="@+id/list_item_imgImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:scaleType="fitXY"
+                android:layout_width="130dp"
+                android:layout_height="85dp"
                 android:src="@drawable/qk_logo" />
 
             <TextView

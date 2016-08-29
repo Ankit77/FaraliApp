@@ -100,8 +100,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
         });
 
         Glide.with(holder.mImageView.getContext())
-                .load(mValues.get(position).getImage())
-                .fitCenter()
+                .load(mValues.get(position).getImage()).placeholder(R.mipmap.appicon)
                 .into(holder.mImageView);
     }
 
