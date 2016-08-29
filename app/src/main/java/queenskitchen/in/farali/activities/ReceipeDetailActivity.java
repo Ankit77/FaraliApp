@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,6 +109,7 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
         tvLevel.setText("Level of Cooking : " + recipesModel.getLevel());
         tvIngredients.setText(recipesModel.getIngredients());
         tvMethod.setText(Html.fromHtml(recipesModel.getContent()));
+        tvMethod.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
