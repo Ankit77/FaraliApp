@@ -37,7 +37,6 @@ import com.bumptech.glide.Glide;
 import queenskitchen.in.farali.FaraliApp;
 import queenskitchen.in.farali.R;
 import queenskitchen.in.farali.common.Const;
-import queenskitchen.in.farali.common.Utils;
 import queenskitchen.in.farali.model.RecipesModel;
 
 
@@ -54,6 +53,8 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
     private TextView tvLevel;
     private TextView tvIngredients;
     private TextView tvMethod;
+    private TextView tvIngredientslbl;
+    private TextView tvMethodlbl;
     private FloatingActionButton fabFav;
     private FloatingActionButton fabShare;
     private ImageView imgRecipe;
@@ -94,6 +95,8 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
         tvPreparation = (TextView) findViewById(R.id.activity_recipe_detail_tvpreproration);
         tvIngredients = (TextView) findViewById(R.id.activity_recipe_detail_tvingredients);
         tvMethod = (TextView) findViewById(R.id.activity_recipe_detail_tvpreparation);
+        tvIngredientslbl = (TextView) findViewById(R.id.activity_recipe_detail_tvingredients_lbl);
+        tvMethodlbl = (TextView) findViewById(R.id.activity_recipe_detail_tvpreparation_lbl);
         fabFav = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fabfav);
         fabShare = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fabShare);
         imgRecipe = (ImageView) findViewById(R.id.activity_recipe_detail_imgrecipeimage);
@@ -102,19 +105,31 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     private void loadBackdrop(RecipesModel recipesModel) {
-        Glide.with(this).load(recipesModel.getImage()).centerCrop().into(imgRecipe);
-        tvCookingTime.setText("Cooking Time : " + recipesModel.getCookingtime());
-        tvServing.setText("Servings : " + recipesModel.getServings());
-        tvPreparation.setText("Pre-properation : " + recipesModel.getPreproperation());
-        tvLevel.setText("Level of Cooking : " + recipesModel.getLevel());
-        tvIngredients.setText(recipesModel.getIngredients());
-        tvMethod.setText(Html.fromHtml(recipesModel.getContent()));
+        Glide.with(this).load(recipesModel.getImage()).fitCenter().into(imgRecipe);
+        if (recipesModel.getLanguage().equalsIgnoreCase(Const.LANG_ENG)) {
+            tvCookingTime.setText("Cooking Time : " + recipesModel.getCookingtime());
+            tvServing.setText("Servings : " + recipesModel.getServings());
+            tvPreparation.setText("Pre-properation : " + recipesModel.getPreproperation());
+            tvLevel.setText("Level of Cooking : " + recipesModel.getLevel());
+            tvIngredientslbl.setText("Ingredients");
+            tvMethodlbl.setText("Preparation Method");
+        } else {
+            tvCookingTime.setText("બનાવવામાં લાગતો સમય : " + recipesModel.getCookingtime());
+            tvServing.setText("સર્વીગ : " + recipesModel.getServings());
+            tvPreparation.setText("પુર્વતૈયારી : " + recipesModel.getPreproperation());
+            tvLevel.setText("લેવલ ઓફ કુકીંગ : " + recipesModel.getLevel());
+            tvIngredientslbl.setText("સામગ્રી");
+            tvMethodlbl.setText("બનાવવાની પદ્ધતિ");
+        }
+        String ingredients = recipesModel.getIngredients().replaceAll("\\\\", "");
+        tvIngredients.setText(Html.fromHtml(ingredients));
+        String method = recipesModel.getContent().replaceAll("\\\\", "");
+        tvMethod.setText(Html.fromHtml(method));
         tvMethod.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
         return true;
     }
 
@@ -128,9 +143,9 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_share:
-                Utils.shareApplication(ReceipeDetailActivity.this);
-                return true;
+//            case R.id.action_share:
+//                Utils.shareApplication(ReceipeDetailActivity.this);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

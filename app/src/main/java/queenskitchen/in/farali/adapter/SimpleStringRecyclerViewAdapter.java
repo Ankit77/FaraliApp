@@ -101,7 +101,6 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
 
         Glide.with(holder.mImageView.getContext())
                 .load(mValues.get(position).getImage())
-                .override(150, 150)
                 .fitCenter()
                 .into(holder.mImageView);
     }
