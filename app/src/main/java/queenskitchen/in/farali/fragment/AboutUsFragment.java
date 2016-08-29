@@ -36,7 +36,7 @@ public class AboutUsFragment extends Fragment {
                 "\n" +
                 "Application Version : <app version>\n" +
                 "\n" +
-                "All content and images on this application - unless stated otherwise - are © "+currentyear+" - <currnet year> queenskitchen.in.\n";
+                "All content and images on this application - unless stated otherwise - are © 2015 - "+currentyear+" queenskitchen.in.\n";
 
         tvContent = (AdvancedTextView) view.findViewById(R.id.fragment_aboutus_tvContent);
         tvContent.setText(content);
