@@ -60,7 +60,7 @@ public class MyGcmListenerService extends GcmListenerService {
     private void showNotification(String message) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.appicon)
+                        .setSmallIcon(getNotificationIcon())
                         .setContentTitle(getString(R.string.app_name))
                         .setContentText(message).setAutoCancel(true).setPriority(Notification.PRIORITY_HIGH)
                         .setOngoing(true).setLights(0xFF00FF, 300, 100);
@@ -88,4 +88,8 @@ public class MyGcmListenerService extends GcmListenerService {
         mNotificationManager.notify(1, mBuilder.build());
     }
 
+    private int getNotificationIcon() {
+        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+        return useWhiteIcon ? R.drawable.ic_lolipop : R.mipmap.appicon;
+    }
 }

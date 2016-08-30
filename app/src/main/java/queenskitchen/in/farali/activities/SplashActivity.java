@@ -86,7 +86,7 @@ public class SplashActivity extends AppCompatActivity {
             }
             WSGetRecipe wsGetRecipe1 = new WSGetRecipe(SplashActivity.this);
             ArrayList<RecipesModel> recipeList1 = wsGetRecipe1.executeWebservice("g", String.valueOf(date));
-            if (recipeList != null && recipeList.size() > 0) {
+            if (recipeList1 != null && recipeList1.size() > 0) {
                 faraliApp.getDatabaseHelper().insertRecipeBulk(recipeList1);
             }
             return null;
