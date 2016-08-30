@@ -119,7 +119,7 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
             tvPreparation.setText("પુર્વતૈયારી : " + recipesModel.getPreproperation());
             tvLevel.setText("લેવલ ઓફ કુકીંગ : " + recipesModel.getLevel());
             tvIngredientslbl.setText("સામગ્રી");
-            tvMethodlbl.setText("બનાવવાની પદ્ધતિ");
+            tvMethodlbl.setText("બનાવવાની રીત");
         }
         String ingredients = recipesModel.getIngredients().replaceAll("\\\\", "");
         tvIngredients.setText(Html.fromHtml(ingredients));

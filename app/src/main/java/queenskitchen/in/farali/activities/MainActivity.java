@@ -286,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         if (receipeListFragment != null && receipeListFragment.isVisible()) {
             showAlertDialog(MainActivity.this, "Do you really want to close App?");
         } else {
+            mDrawerLayout.closeDrawers();
             callFragment(Const.LANG_ENG);
         }
 
