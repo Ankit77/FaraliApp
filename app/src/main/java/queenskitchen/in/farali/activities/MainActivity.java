@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
                         favListFragment.showSearchList(query);
                     }
                 }
-                Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
                 return false;
             }
 
@@ -137,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         ArrayList<String> list = new ArrayList<>();
-        list.add("ENGLISH RECIPES");
-        list.add("GUJRATI RECIPES");
+        list.add("RECIPES IN ENGLISH");
+        list.add("ગુજરાતીમાં વાનગીઓ");
         list.add("MY FAVOURITES");
         list.add("SHARE WITH FRIENDS");
         list.add("RATE THIS APPLICATION");

@@ -123,7 +123,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 maxdate = cursor.getString(cursor.getColumnIndex(DBUtils.COLUMN_RECEIPE_UPDATEDDATE));
-
             }
         } catch (Exception e) {
             e.printStackTrace();

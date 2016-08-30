@@ -54,7 +54,13 @@ public class ReceipeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         faraliApp = (FaraliApp) getActivity().getApplicationContext();
-        ((MainActivity) getActivity()).getToolbar().setTitle("Farali Recipes");
+        if(type.equalsIgnoreCase(Const.LANG_ENG)) {
+            ((MainActivity) getActivity()).getToolbar().setTitle("Farali Recipes");
+        }else
+        {
+            ((MainActivity) getActivity()).getToolbar().setTitle("ફરાળી વાનગીઓ");
+        }
+
         view = inflater.inflate(R.layout.fragment_cheese_list, null);
         rv = (RecyclerView) view.findViewById(R.id.recyclerview);
         tvEmpty = (TextView) view.findViewById(R.id.tvempty);
