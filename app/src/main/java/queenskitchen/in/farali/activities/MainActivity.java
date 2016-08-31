@@ -207,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
             callAboutFragment();
         }
         mDrawerLayout.closeDrawers();
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        }
     }
 
     private void callFragment(String language) {
@@ -282,12 +285,15 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
 
     @Override
     public void onBackPressed() {
-        ReceipeListFragment receipeListFragment = (ReceipeListFragment) getSupportFragmentManager().findFragmentByTag(ReceipeListFragment.class.getSimpleName());
-        if (receipeListFragment != null && receipeListFragment.isVisible()) {
-            showAlertDialog(MainActivity.this, "Do you really want to close App?");
+        if (!searchView.isSearchOpen()) {
+            ReceipeListFragment receipeListFragment = (ReceipeListFragment) getSupportFragmentManager().findFragmentByTag(ReceipeListFragment.class.getSimpleName());
+            if (receipeListFragment != null && receipeListFragment.isVisible()) {
+                showAlertDialog(MainActivity.this, "Do you really want to close App?");
+            } else {
+                callFragment(Const.LANG_ENG);
+            }
         } else {
-            mDrawerLayout.closeDrawers();
-            callFragment(Const.LANG_ENG);
+            searchView.closeSearch();
         }
 
     }
