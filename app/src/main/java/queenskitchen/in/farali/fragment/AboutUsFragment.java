@@ -39,7 +39,7 @@ public class AboutUsFragment extends Fragment {
         String version = pInfo.versionName;
         String content = "India is a land of diversity. One can observe variations in culture, language, cuisine etc. Especially Indian cuisine is like a rainbow of different tastes and flavours. We here at Queen's Kitchen try to create a platform where one can have access to various Vegetarian Indian cuisines like Gujarati, Marathi, Rajasthani, Punjabi etc. Vegetarian cuisine holds a special place in food Industry. It is healthy, tasty and full of flavours.\n" +
                 "\n" +
-                "Through this Queen’s Kitchen Application you can easily learn to how to make different type of  Farali recipes, for you and your love ones.\n" +
+                "Through this Queen’s Kitchen Application you can easily learn how to make different type of  Farali recipes, for you and your love ones.\n" +
                 "\n" +
                 "For Help and Support : mail@queenskitchen.in\n" +
                 "\n" +
