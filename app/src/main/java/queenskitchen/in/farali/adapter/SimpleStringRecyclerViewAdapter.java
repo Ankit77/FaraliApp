@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.List;
 
 import queenskitchen.in.farali.R;
@@ -87,7 +89,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<Simple
         if (mValues.get(position).getLanguage().equalsIgnoreCase(Const.LANG_ENG)) {
             holder.mTextView.setText(Utils.decodeUnicode(mValues.get(position).getTitle()));
         } else {
-            holder.mTextView.setText(mValues.get(position).getTitle());
+            holder.mTextView.setText(StringEscapeUtils.unescapeJava(mValues.get(position).getTitle()));
         }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

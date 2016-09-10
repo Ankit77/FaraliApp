@@ -35,6 +35,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
     private MaterialSearchView searchView;
     private ActionBar ab;
     private FaraliApp faraliApp;
+    private TextView tvTitle;
 
     public Toolbar getToolbar() {
         return toolbar;
@@ -74,8 +76,13 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         callFragment(Const.LANG_ENG);
     }
 
+    public TextView getTvTitle() {
+        return tvTitle;
+    }
+
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tvTitle=(TextView)findViewById(R.id.toolbar_titile);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);

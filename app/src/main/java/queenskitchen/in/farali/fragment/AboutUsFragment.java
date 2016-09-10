@@ -28,7 +28,8 @@ public class AboutUsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_aboutus, null);
-        ((MainActivity) getActivity()).getToolbar().setTitle("About");
+        ((MainActivity) getActivity()).getToolbar().setTitle("");
+        ((MainActivity) getActivity()).getTvTitle().setText("About");
         currentyear = Calendar.getInstance().get(Calendar.YEAR);
         PackageInfo pInfo = null;
         try {

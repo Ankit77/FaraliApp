@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:gravity="center_vertical">
 
-    <TextView
+    <queenskitchen.in.farali.common.CustomeTextView
         android:id="@+id/nav_list_item_tvTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

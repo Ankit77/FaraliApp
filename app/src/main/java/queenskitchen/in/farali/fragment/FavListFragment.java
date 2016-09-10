@@ -38,7 +38,8 @@ public class FavListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         faraliApp = (FaraliApp) getActivity().getApplicationContext();
-        ((MainActivity) getActivity()).getToolbar().setTitle("My Favorites");
+        ((MainActivity) getActivity()).getToolbar().setTitle("");
+        ((MainActivity) getActivity()).getTvTitle().setText("My Favorites");
         view = inflater.inflate(R.layout.fragment_cheese_list, null);
         rv = (RecyclerView) view.findViewById(R.id.recyclerview);
         tvEmpty=(TextView)view.findViewById(R.id.tvempty);

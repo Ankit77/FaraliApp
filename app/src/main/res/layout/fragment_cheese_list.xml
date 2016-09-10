@@ -18,7 +18,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <queenskitchen.in.farali.common.CustomeTextView
         android:id="@+id/tvempty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -39,7 +39,7 @@
                 android:layout_height="85dp"
                 android:src="@drawable/qk_logo" />
 
-            <TextView
+            <queenskitchen.in.farali.common.CustomeTextView
                 android:id="@+id/list_item_tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -55,10 +55,13 @@ public class ReceipeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         faraliApp = (FaraliApp) getActivity().getApplicationContext();
         if(type.equalsIgnoreCase(Const.LANG_ENG)) {
-            ((MainActivity) getActivity()).getToolbar().setTitle("Farali Recipes");
+            ((MainActivity) getActivity()).getToolbar().setTitle("");
+            ((MainActivity) getActivity()).getTvTitle().setText("Farali Recipes");
         }else
         {
-            ((MainActivity) getActivity()).getToolbar().setTitle("ફરાળી વાનગીઓ");
+            ((MainActivity) getActivity()).getToolbar().setTitle("");
+            ((MainActivity) getActivity()).getTvTitle().setText("ફરાળી વાનગીઓ");
+
         }
 
         view = inflater.inflate(R.layout.fragment_cheese_list, null);

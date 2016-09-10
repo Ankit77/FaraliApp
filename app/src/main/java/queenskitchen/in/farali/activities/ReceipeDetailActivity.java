@@ -17,6 +17,7 @@
 package queenskitchen.in.farali.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -79,6 +80,9 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
             if (!TextUtils.isEmpty(recipeId)) {
                 recipesModel = faraliApp.getDatabaseHelper().getRecipeDetail(recipeId);
                 if (recipesModel != null) {
+                    final Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Lohit-Gujarati.ttf");
+                    collapsingToolbar.setCollapsedTitleTypeface(font);
+                    collapsingToolbar.setExpandedTitleTypeface(font);
                     collapsingToolbar.setTitle(recipesModel.getTitle());
                     loadBackdrop(recipesModel);
                 }
