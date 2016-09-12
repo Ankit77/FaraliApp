@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="@dimen/pointer_margintop"
             android:src="@drawable/pointer" />
 
         <queenskitchen.in.farali.common.CustomeTextView
