@@ -35,6 +35,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +56,7 @@ import queenskitchen.in.farali.fragment.ReceipeListFragment;
 /**
  * TODO
  */
-public class MainActivity extends AppCompatActivity implements NavigationAdapter.MenuClickListner {
+public class MainActivity extends AppCompatActivity implements NavigationAdapter.MenuClickListner, View.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
     private RecyclerView rv;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
     private ActionBar ab;
     private FaraliApp faraliApp;
     private TextView tvTitle;
+    private LinearLayout llinfo;
 
     public Toolbar getToolbar() {
         return toolbar;
@@ -72,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        faraliApp = (FaraliApp) getApplicationContext();
+
         init();
         callFragment(Const.LANG_ENG);
     }
@@ -82,7 +87,10 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvTitle=(TextView)findViewById(R.id.toolbar_titile);
+        tvTitle = (TextView) findViewById(R.id.toolbar_titile);
+        llinfo = (LinearLayout) findViewById(R.id.activity_main_llinfo);
+        llinfo.setOnClickListener(this);
+
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -97,6 +105,11 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         rv = (RecyclerView) findViewById(R.id.lst_menu_items);
         setupRecyclerView(rv);
         loadSearchView();
+        if (faraliApp.getSharedPreferences().getBoolean("showinfo", true)) {
+            llinfo.setVisibility(View.VISIBLE);
+        } else {
+            llinfo.setVisibility(View.GONE);
+        }
     }
 
     private void loadSearchView() {
@@ -303,5 +316,13 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
             searchView.closeSearch();
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == llinfo) {
+            llinfo.setVisibility(View.GONE);
+            faraliApp.getSharedPreferences().edit().putBoolean("showinfo", false).commit();
+        }
     }
 }
