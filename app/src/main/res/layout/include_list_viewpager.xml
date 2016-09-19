@@ -37,6 +37,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
                 <queenskitchen.in.farali.common.CustomeTextView
                     android:id="@+id/toolbar_titile"
                     android:layout_width="match_parent"

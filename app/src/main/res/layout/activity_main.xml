@@ -54,24 +54,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#99000000"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="@dimen/pointer_margintop"
-            android:src="@drawable/pointer" />
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pointer_margintop"
+                android:src="@drawable/ic_list_black_36dp"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pointer" />
+        </LinearLayout>
 
         <queenskitchen.in.farali.common.CustomeTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="Tap here for Recipes in Gujarati and more options.\n Thank you for installing our recipe application - Queen's Kitchen\n\nTAP ANYWHERE TO CLOSE"/>
+            android:layout_marginTop="10dp"
+            android:text="Tap here for Recipes in Gujarati and more options.\n Thank you for installing our recipe application - Queen's Kitchen\n\nTAP ANYWHERE TO CLOSE"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
     </LinearLayout>
 </FrameLayout>
