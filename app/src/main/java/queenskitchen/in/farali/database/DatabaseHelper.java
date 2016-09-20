@@ -147,7 +147,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         Cursor cursor = null;
         try {
-            String query = "Select * from " + DBUtils.RECEIPE_TABLE + " where " + DBUtils.COLUMN_RECEIPE_LANGUAGE + " = '" + language + "'";
+            String query = "Select * from " + DBUtils.RECEIPE_TABLE + " where " + DBUtils.COLUMN_RECEIPE_LANGUAGE + " = '" + language + "' ORDER BY date(recipes_date) DESC";
             cursor = database.rawQuery(query, null);
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -194,7 +194,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         Cursor cursor = null;
         try {
-            String query = "Select * from " + DBUtils.RECEIPE_TABLE + " where " + DBUtils.COLUMN_RECEIPE_FAV + " = " + Const.FAV;
+            String query = "Select * from " + DBUtils.RECEIPE_TABLE + " where " + DBUtils.COLUMN_RECEIPE_FAV + " = " + Const.FAV + "  ORDER BY date(recipes_date) DESC";
             cursor = database.rawQuery(query, null);
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -240,7 +240,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         Cursor cursor = null;
         try {
-            String query = "SELECT * FROM recipes where recipes_keyword  LIKE '%" + keyword + "%' and " + DBUtils.COLUMN_RECEIPE_LANGUAGE + " = '" + language + "'";
+            String query = "SELECT * FROM recipes where recipes_keyword  LIKE '%" + keyword + "%' and " + DBUtils.COLUMN_RECEIPE_LANGUAGE + " = '" + language + "'  ORDER BY date(recipes_date) DESC";
             cursor = database.rawQuery(query, null);
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -286,7 +286,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         Cursor cursor = null;
         try {
-            String query = "SELECT * FROM recipes where recipes_keyword  LIKE '%" + keyword + "%' and " + DBUtils.COLUMN_RECEIPE_FAV + " = " + Const.FAV;
+            String query = "SELECT * FROM recipes where recipes_keyword  LIKE '%" + keyword + "%' and " + DBUtils.COLUMN_RECEIPE_FAV + " = " + Const.FAV + "  ORDER BY date(recipes_date) DESC";
             cursor = database.rawQuery(query, null);
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
