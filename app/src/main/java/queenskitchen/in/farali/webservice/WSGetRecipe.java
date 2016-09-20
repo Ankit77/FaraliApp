@@ -2,6 +2,7 @@ package queenskitchen.in.farali.webservice;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,11 +34,13 @@ public class WSGetRecipe {
 
     public ArrayList<RecipesModel> executeWebservice(String language, String time) {
         final String url = Const.BASE_URL + "dt=" + time + "&l=" + language;
+        Log.e("WebserviceUrl",url);
         return parseJSONResponse(WebService.getMethod(url), language);
     }
 
 
     public ArrayList<RecipesModel> parseJSONResponse( String response, String language) {
+        Log.e("WebserviceResponse",response);
         ArrayList<RecipesModel> arrayList = new ArrayList<>();
         try {
             if (!TextUtils.isEmpty(response)) {
