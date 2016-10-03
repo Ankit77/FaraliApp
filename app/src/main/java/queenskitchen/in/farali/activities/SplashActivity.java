@@ -15,11 +15,13 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
+import queenskitchen.in.farali.BuildConfig;
 import queenskitchen.in.farali.FaraliApp;
 import queenskitchen.in.farali.R;
 import queenskitchen.in.farali.common.Utils;
 import queenskitchen.in.farali.gcm.RegistrationIntentService;
 import queenskitchen.in.farali.model.RecipesModel;
+import queenskitchen.in.farali.webservice.WSCheckVersion;
 import queenskitchen.in.farali.webservice.WSGetRecipe;
 import queenskitchen.in.farali.webservice.WebService;
 
@@ -52,8 +54,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (WebService.isNetworkAvailable(SplashActivity.this)) {
                     asyncLoadData = new AsyncLoadData();
                     asyncLoadData.execute();
-                }else
-                {
+                } else {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -79,6 +80,10 @@ public class SplashActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(lastUpdateDate)) {
                 date = Utils.convertDateStringtoUnixTimestamp(lastUpdateDate);
             }
+            WSCheckVersion wsCheckVersion = new WSCheckVersion(SplashActivity.this);
+            String versionName = "" + BuildConfig.VERSION_CODE;
+            Boolean aBoolean = wsCheckVersion.executeWebservice(versionName);
+            faraliApp.setUpdateavailable(aBoolean);
             WSGetRecipe wsGetRecipe = new WSGetRecipe(SplashActivity.this);
             ArrayList<RecipesModel> recipeList = wsGetRecipe.executeWebservice("e", String.valueOf(date));
             if (recipeList != null && recipeList.size() > 0) {
@@ -130,5 +135,13 @@ public class SplashActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private class AsyncUpdateCheck extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return null;
+        }
     }
 }

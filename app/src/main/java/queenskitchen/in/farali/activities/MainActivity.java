@@ -76,7 +76,9 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         faraliApp = (FaraliApp) getApplicationContext();
-
+        if (faraliApp.isUpdateavailable()) {
+            showDialog();
+        }
         init();
         callFragment(Const.LANG_ENG);
     }
@@ -324,5 +326,26 @@ public class MainActivity extends AppCompatActivity implements NavigationAdapter
             llinfo.setVisibility(View.GONE);
             faraliApp.getSharedPreferences().edit().putBoolean("showinfo", false).commit();
         }
+    }
+
+    private void showDialog() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(getString(R.string.app_name))
+                .setMessage("There is a latest version of this application available on Google Play Store.Update Now!")
+                .setPositiveButton("LATER", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("UPDATE NOW", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.dismiss();
+                        launchMarket();
+                    }
+                })
+                .setIcon(R.mipmap.appicon)
+                .show();
     }
 }

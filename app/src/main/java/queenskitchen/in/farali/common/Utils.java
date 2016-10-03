@@ -118,7 +118,8 @@ public class Utils {
     }
 
     public static void shareApplication(Context context) {
-        String message = "You must try this Farali Recipe Application ones, Download Farali Recipes now from Playstore : https://play.google.com/store/apps/details?id="+context.getPackageName()+"&hl=en";
+        String message = "You must try this Farali Recipe Application ones, Download Farali Recipes from Playstore now : https://play.google.com/store/apps/details?id=" + context.getPackageName() + "&hl=en\n" +
+                "for more recipes visit : http://goo.gl/0yjXem";
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT,
@@ -126,7 +127,6 @@ public class Utils {
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
     }
-
 
 
 }

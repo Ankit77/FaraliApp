@@ -13,6 +13,7 @@ import queenskitchen.in.farali.database.DatabaseHelper;
 public class FaraliApp extends Application {
     private SharedPreferences sharedPreferences;
     private DatabaseHelper databaseHelper;
+    private boolean updateavailable=false;
 
     @Override
     public void onCreate() {
@@ -23,6 +24,13 @@ public class FaraliApp extends Application {
 
     }
 
+    public void setUpdateavailable(boolean updateavailable) {
+        this.updateavailable = updateavailable;
+    }
+
+    public boolean isUpdateavailable() {
+        return updateavailable;
+    }
 
     public DatabaseHelper getDatabaseHelper() {
         return databaseHelper;

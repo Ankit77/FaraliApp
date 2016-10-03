@@ -177,7 +177,7 @@ public class ReceipeDetailActivity extends AppCompatActivity implements View.OnC
 
     public void shareRecipe() {
         if (recipesModel != null) {
-            String message = "i want to share really amazing Farali Recipe with you : " + recipesModel.getLink();
+            String message = "I want to share really amazing " + recipesModel.getTitle() + " Farali Recipe with you : " + recipesModel.getLink() + " For more Farali Recipes install : http://goo.gl/eo66F4";
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT,
